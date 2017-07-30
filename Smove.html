@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Smove</title>
+        <link rel="stylesheet" type="text/css" href='Smove.css'>
+        <script type="application/javascript" src="Smove.js"></script>
+    </head>
+    <body onload="welcome(); draw();" onkeydown="move(event);">
+        <div id="welcomeBox">
+            <div id="welcomeText">SMOVE</div>
+            <canvas id="welcomeButton" width="310px" height="110px"></canvas>
+            <div id="welcomeGo" onclick="entry(); stopAnimation('welcome');">Let's Go !</div>
+        </div>
+        <div id="score">
+            <div><h id="bestScore">BEST:0</h></div>
+            <div><h id="currentScore">0</h></div>
+        </div> 
+        <div id="level">
+            <div><h id="levelText">LEVEL</h></div>
+            <div><h id="currentLevel">1</h></div>
+        </div> 
+        <div id="battleField">
+            <canvas id="gratings" width="310px" height="310px"></canvas>
+            <canvas id="food" width="100px" height="100px"></canvas>
+            <canvas id="eater" width="100px" height="100px"></canvas>
+        </div>
+        <div id="failedInfo">
+            <div id="failedText">Game Over!</div>
+            <canvas id="tryAgainButton" width="310px" height="110px"></canvas>
+            <div id="tryAgain" onclick="entry(); stopAnimation('end');">Try Again !</div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,154 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Microsoft YaHei", "SimHei", "Apple LiGothic Medium";
+    background: linear-gradient(#FBAB7A, orange);
+    overflow: hidden;
+}
+
+/*　格子　*/
+#battleField {
+    display: none;
+    width: 310px;
+    height: 310px;
+    /*　水平居中　*/
+    margin: 0 auto;
+    /*　垂直居中　*/
+    position: relative; 
+    top: 50%;
+    transform: translateY(-50%);
+}
+#gratings {
+    position: absolute;
+    z-index: 0;
+    top: 0px;
+    left: 0px;
+}
+#food {
+    position: absolute;
+    z-index: 1;
+    /*　初始化位置　*/
+    top: 5px;
+    left: 5px;
+}
+#eater {
+    position: absolute;
+    z-index: 2;
+    /*　初始化位置　*/
+    top: 105px;
+    left: 105px;
+}
+
+/*　欢迎界面　*/
+#welcomeBox {
+    width: 480px;
+    height: 480px;
+    /*　水平居中　*/
+    margin: 0 auto;
+    /*　垂直居中　*/
+    position: relative; 
+    top: 50%;
+    transform: translateY(-50%);
+}
+#welcomeText {
+    color: red;
+    width: 480px;
+    height: 240px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 120px;
+}
+#welcomeButton {
+    position :absolute;
+    top: 250px;
+    left: 85px;
+}
+#welcomeGo {
+    color: red;
+    width: 310px;
+    height: 110px;
+    position :absolute;
+    top: 265px;
+    left: 85px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 50px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+/*　积分　*/
+#score {
+    position: absolute;
+    display: none;
+}
+#bestScore {
+    color: white;
+    font-weight: 900;
+    font-size: 40px;
+}
+#currentScore {
+    color: white;
+    font-weight: 900;
+    font-size: 120px;
+}
+
+/*　等级　*/
+#level {
+    display: none;
+    position: absolute;
+    right: 0px;
+}
+#levelText {
+    color: white;
+    font-weight: 900;
+    font-size: 40px;
+}
+#currentLevel {
+    color: white;
+    font-weight: 900;
+    font-size: 120px;
+}
+
+/* 游戏结束　*/
+#failedInfo {
+    display: none;
+    width: 480px;
+    height: 480px;
+    /*　水平居中　*/
+    margin: 0 auto;
+    /*　垂直居中　*/
+    position: relative; 
+    top: 50%;
+    transform: translateY(-50%);
+}
+#failedText {
+    color: red;
+    width: 480px;
+    height: 240px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 75px;
+}
+#tryAgainButton {
+    position :absolute;
+    top: 250px;
+    left: 85px;
+}
+#tryAgain {
+    color: red;
+    width: 310px;
+    height: 110px;
+    position :absolute;
+    top: 265px;
+    left: 85px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 50px;
+    z-index: 1;
+    cursor: pointer;
+}
