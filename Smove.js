@@ -74,7 +74,6 @@ function entry() {
     level.style.display = "block";
     battleField.style.display = "block";
     start();
-    startGesture();
 }
 function startGesture(){
     touch.on('body', 'swipeleft swiperight swipeup swipedown', function(ev){
