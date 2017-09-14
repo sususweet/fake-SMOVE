@@ -101,7 +101,7 @@ body {
 #level {
     display: none;
     position: absolute;
-    right: 0px;
+    right: 0;
 }
 #levelText {
     color: white;

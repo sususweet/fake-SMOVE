@@ -74,6 +74,19 @@ function entry() {
     level.style.display = "block";
     battleField.style.display = "block";
     start();
+    startGesture();
+}
+function startGesture(){
+    touch.on('body', 'swipeleft swiperight swipeup swipedown', function(ev){
+        switch (ev.type){
+            case 'swipeleft': moveLeft();break;
+            case 'swiperight': moveRight();break;
+            case 'swipeup': moveUp();break;
+            case 'swipedown': moveDown();break;
+        }
+        judge();
+        console.log("you have done", ev.type);
+    });
 }
 function start() {
     gameIsOver = false;
@@ -155,6 +168,8 @@ function end() {
 function newBomb() {
     var bomb = document.createElement("div");
     var canvas = document.createElement("canvas");
+    canvas.width = 100;
+    canvas.height = 100;
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "black";
     ctx.beginPath();
