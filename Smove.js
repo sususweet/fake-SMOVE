@@ -96,10 +96,11 @@ function start() {
     document.getElementById("currentLevel").innerHTML = String(1);
     speed = 5;
     //策略控制
-    var bombController = setInterval(function(){ 
+    //bombCreater(speed);
+    var bombController = setInterval(function(){
         if (bombCounter < level + 1 && level <= 3) {
             bombCreater(speed);
-        } 
+        }
         else if (level > 3 && bombCounter <= 4) {
             bombCreater(speed);
         }
@@ -187,8 +188,9 @@ function newBomb() {
 }
 //炸弹动画控制
 function bombCreater(speed) {
-    var bomb = newBomb(); bombCounter++;
-    var i = parseInt(String(2 * Math.random())); //行列确定
+    var bomb = newBomb();
+    bombCounter++;
+    var i = parseInt(String(2 * Math.random())); //行列确定,0: 列，1：行
     var j = parseInt(String(3 * Math.random())); //行列序号
     var k = parseInt(String(2 * Math.random())); //来向
     if (i === 0) {
@@ -207,46 +209,158 @@ function bombCreater(speed) {
         }
         bomb.style.left = String(document.body.clientWidth) + "px";
     }
-    bomb.style.display = "block";
+    bomb.style.display = "none";
+    //bomb.style.opacity = 0;
     //动画控制
-    var x = 0;
+    var x;
+    const offset = 100;
     if (k === 0) {
-        var mover = setInterval(function(){ 
+        x = -200;
+
+        requestAnimationFrame(function animloop(){
+            //从上到下
             if (i === 0) {
-                bomb.style.top = String(-(document.body.clientHeight - 310) / 2 - 100 + x) + "px";
-                if (gameover(bomb) || gameIsOver || x > document.body.clientHeight + 100) {
+                bomb.style.top = x + "px";
+                //bomb.style.top =  "-200px";  410px
+                if (x > 410 - offset) {
+                    $(bomb).fadeOut('slow');
+                }else if (x < -200 + offset){
+                    $(bomb).fadeIn('slow');
+                }
+                if(!(gameover(bomb) || gameIsOver || x > 410)) {
+                    requestAnimationFrame(animloop);
+                }else{
                     document.getElementById("battleField").removeChild(bomb);
-                    clearInterval(mover); bombCounter--;
+                    bombCounter--;
                 }
             }
             else if (i === 1) {
-                bomb.style.left = String(-(document.body.clientWidth - 310) / 2 - 100 + x) + "px";
-                if (gameover(bomb) || gameIsOver  || x > document.body.clientWidth + 100) {
+                bomb.style.left = x + "px";
+                //bomb.style.top =  "-200px";  410px
+                if (x > 410 - offset) {
+                    $(bomb).fadeOut('slow');
+                }else if (x < -200 + offset){
+                    $(bomb).fadeIn('slow');
+                }
+                if(!(gameover(bomb) || gameIsOver || x > 410)) {
+                    requestAnimationFrame(animloop);
+                }else{
                     document.getElementById("battleField").removeChild(bomb);
-                    clearInterval(mover); bombCounter--;
+                    bombCounter--;
                 }
             }
-            x += speed / 2; 
-        }, 10);
+            x += speed * 3 / 2;
+        });
+
+
+       /* bomb.style.top = x + "px";
+        bomb.style.left = "0px";
+        $(bomb).animate({top:'-100px',opacity:'1'});
+        $(bomb).animate({top:'310px',opacity:'1'});
+        $(bomb).animate({top:'410px',opacity:'0'});*/
+      //  $(bomb).fadeIn('slow').delay(1);
+      //  $(bomb).fadeOut('slow').delay(100);
+        /*var mover = setInterval(function(){
+            //从上到下
+            if (i === 0) {
+                bomb.style.top = x + "px";
+                //bomb.style.top =  "-200px";  410px
+                if (x > 410 - offset) {
+                    $(bomb).fadeOut('slow');
+                }else if (x < -200 + offset){
+                    $(bomb).fadeIn('slow');
+                }
+                if (gameover(bomb) || gameIsOver || x > 410) {
+                    document.getElementById("battleField").removeChild(bomb);
+                    clearInterval(mover);
+                    bombCounter--;
+                }
+            }
+            else if (i === 1) {
+                bomb.style.left = x + "px";
+                //bomb.style.top =  "-200px";  410px
+                if (x > 410 - offset) {
+                    $(bomb).fadeOut('slow');
+                }else if (x < -200 + offset){
+                    $(bomb).fadeIn('slow');
+                }
+                if (gameover(bomb) || gameIsOver || x > 410) {
+                    document.getElementById("battleField").removeChild(bomb);
+                    clearInterval(mover);
+                    bombCounter--;
+                }
+            }
+            x += speed * 3 / 2;
+        }, 30);*/
     }
     else if (k === 1) {
-        var mover = setInterval(function(){ 
+        x = 410;
+        requestAnimationFrame(function animloop(){
+            //从下到上
             if (i === 0) {
-                bomb.style.top = String((document.body.clientHeight - 310) / 2 + 310 - x) + "px";
-                if (gameover(bomb) || gameIsOver  || x > document.body.clientHeight + 150) {
+                bomb.style.top = x + "px";
+                //bomb.style.top =  "-200px";  410px
+                if (x > 410 - offset) {
+                    $(bomb).fadeIn('slow');
+                }else if (x < -200 + offset){
+                    $(bomb).fadeOut('slow');
+                }
+                if(!(gameover(bomb) || gameIsOver || x < -200)) {
+                    requestAnimationFrame(animloop);
+                }else{
                     document.getElementById("battleField").removeChild(bomb);
-                    clearInterval(mover); bombCounter--;
+                    bombCounter--;
                 }
             }
             else if (i === 1) {
-                bomb.style.left = String(+(document.body.clientWidth - 310) / 2 + 310 - x) + "px";
-                if (gameover(bomb) || gameIsOver  || x > document.body.clientWidth + 100) {
+                bomb.style.left = x + "px";
+                //bomb.style.top =  "-200px";  410px
+                if (x > 410 - offset) {
+                    $(bomb).fadeIn('slow');
+                }else if (x < -200 + offset){
+                    $(bomb).fadeOut('slow');
+                }
+                if(!(gameover(bomb) || gameIsOver || x < -200)) {
+                    requestAnimationFrame(animloop);
+                }else{
                     document.getElementById("battleField").removeChild(bomb);
-                    clearInterval(mover); bombCounter--;
+                    bombCounter--;
                 }
             }
-            x += speed / 2; 
-        }, 10);
+            x -= speed * 3 / 2;
+        });
+        /*var mover = setInterval(function(){
+            //从下到上
+            if (i === 0) {
+                bomb.style.top = x + "px";
+                //bomb.style.top =  "-200px";  410px
+                if (x > 410 - offset) {
+                    $(bomb).fadeIn('slow');
+                }else if (x < -200 + offset){
+                    $(bomb).fadeOut('slow');
+                }
+                if (gameover(bomb) || gameIsOver || x < -200) {
+                    document.getElementById("battleField").removeChild(bomb);
+                    clearInterval(mover);
+                    bombCounter--;
+                }
+            }
+            else if (i === 1) {
+                bomb.style.left = x + "px";
+                //bomb.style.top =  "-200px";  410px
+                if (x > 410 - offset) {
+                    $(bomb).fadeIn('slow');
+                }else if (x < -200 + offset){
+                    $(bomb).fadeOut('slow');
+                }
+                if (gameover(bomb) || gameIsOver || x < -200) {
+                    document.getElementById("battleField").removeChild(bomb);
+                    clearInterval(mover);
+                    bombCounter--;
+                }
+            }
+            x -= speed * 3 / 2;
+        }, 30);*/
     }
 }    
 //判定是否触雷
@@ -301,25 +415,45 @@ function moveDown() {
     var eater = document.getElementById("eater");
     if (eaterPosition[1] === 1) {
         var i = 0;
-        var mover = setInterval(function(){ 
+        requestAnimationFrame(function animloop(){
+            if (i >= 12) {
+                eater.style.top = "205px";
+                return;
+            }
+            i++;
+            eater.style.top = String(105 + 10 * i) + "px";
+            requestAnimationFrame(animloop);
+        });
+
+
+       /* var mover = setInterval(function(){
             i++;
             eater.style.top = String(105 + 10 * i) + "px";
             if (i >= 12) {
                 eater.style.top = "205px";
                 clearInterval(mover);
             }
-        }, 10);    
+        }, 10);*/
     }
     else if (eaterPosition[1] === 2) {    
         var i = 0;
-        var mover = setInterval(function(){ 
+        requestAnimationFrame(function animloop(){
+            if (i >= 12) {
+                eater.style.top = "105px";
+                return;
+            }
+            i++;
+            eater.style.top = String(5 + 10 * i) + "px";
+            requestAnimationFrame(animloop);
+        });
+        /*var mover = setInterval(function(){
             i++;
             eater.style.top = String(5 + 10 * i) + "px";
             if (i >= 12) {
                 eater.style.top = "105px";
                 clearInterval(mover);
             }
-        }, 10);    
+        }, 10);*/
     }
     eaterPosition[1]--;
 }
@@ -330,25 +464,43 @@ function moveUp() {
     var eater = document.getElementById("eater");
     if (eaterPosition[1] === 1) {
         var i = 0;
-        var mover = setInterval(function(){ 
+        requestAnimationFrame(function animloop(){
+            if (i >= 12) {
+                eater.style.top = "5px";
+                return;
+            }
+            i++;
+            eater.style.top = String(105 - 10 * i) + "px";
+            requestAnimationFrame(animloop);
+        });
+        /*var mover = setInterval(function(){
             i++;
             eater.style.top = String(105 - 10 * i) + "px";
             if (i >= 12) {
                 eater.style.top = "5px";
                 clearInterval(mover);
             }
-        }, 10);    
+        }, 10);*/
     }
     else if (eaterPosition[1] === 0) {    
         var i = 0;
-        var mover = setInterval(function(){ 
+        requestAnimationFrame(function animloop(){
+            if (i >= 12) {
+                eater.style.top = "105px";
+                return;
+            }
+            i++;
+            eater.style.top = String(205 - 10 * i) + "px";
+            requestAnimationFrame(animloop);
+        });
+        /*var mover = setInterval(function(){
             i++;
             eater.style.top = String(205 - 10 * i) + "px";
             if (i >= 12) {
                 eater.style.top = "105px";
                 clearInterval(mover);
             }
-        }, 10);    
+        }, 10);*/
     }
     eaterPosition[1]++;
 }
@@ -359,17 +511,36 @@ function moveRight() {
     var eater = document.getElementById("eater");
     if (eaterPosition[0] === 1) {
         var i = 0;
-        var mover = setInterval(function(){ 
+        requestAnimationFrame(function animloop(){
+            if (i >= 12) {
+                eater.style.left = "205px";
+                return;
+            }
+            i++;
+            eater.style.left = String(105 + 10 * i) + "px";
+            requestAnimationFrame(animloop);
+        });
+        /*var mover = setInterval(function(){
             i++;
             eater.style.left = String(105 + 10 * i) + "px";
             if (i >= 12) {
                 eater.style.left = "205px";
                 clearInterval(mover);
             }
-        }, 10);    
+        }, 10);*/
     }
     else if (eaterPosition[0] === 0) {    
         var i = 0;
+        requestAnimationFrame(function animloop(){
+            if (i >= 12) {
+                eater.style.left = "105px";
+                return;
+            }
+            i++;
+            eater.style.left = String(5 + 10 * i) + "px";
+            requestAnimationFrame(animloop);
+        });
+        /*
         var mover = setInterval(function(){ 
             i++;
             eater.style.left = String(5 + 10 * i) + "px";
@@ -377,7 +548,8 @@ function moveRight() {
                 eater.style.left = "105px";
                 clearInterval(mover);
             }
-        }, 10);    
+        }, 10);
+        */
     }
     eaterPosition[0]++;
 }
@@ -388,25 +560,43 @@ function moveLeft() {
     var eater = document.getElementById("eater");
     if (eaterPosition[0] === 1) {
         var i = 0;
-        var mover = setInterval(function(){ 
+        requestAnimationFrame(function animloop(){
+            if (i >= 12) {
+                eater.style.left = "5px";
+                return;
+            }
+            i++;
+            eater.style.left = String(105 - 10 * i) + "px";
+            requestAnimationFrame(animloop);
+        });
+        /*var mover = setInterval(function(){
             i++;
             eater.style.left = String(105 - 10 * i) + "px";
             if (i >= 12) {
                 eater.style.left = "5px";
                 clearInterval(mover);
             }
-        }, 10);    
+        }, 10);*/
     }
     else if (eaterPosition[0] === 2) {    
         var i = 0;
-        var mover = setInterval(function(){ 
+        requestAnimationFrame(function animloop(){
+            if (i >= 12) {
+                eater.style.left = "105px";
+                return;
+            }
+            i++;
+            eater.style.left = String(205 - 10 * i) + "px";
+            requestAnimationFrame(animloop);
+        });
+       /* var mover = setInterval(function(){
             i++;
             eater.style.left = String(205 - 10 * i) + "px";
             if (i >= 12) {
                 eater.style.left = "105px";
                 clearInterval(mover);
             }
-        }, 10);
+        }, 10);*/
     }    
     eaterPosition[0]--;
 }
